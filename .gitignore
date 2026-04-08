@@ -1,0 +1,16 @@
+# Python
+.venv/
+venv/
+backend/venv/
+__pycache__/
+
+# Env files
+.env
+backend/.env
+
+# Node
+node_modules/
+build/
+
+# OS
+.DS_Store
