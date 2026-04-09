@@ -31,7 +31,9 @@ ChartJS.register(
   Legend
 );
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "process.env.REACT_APP_API_URL";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 function buildAnalyticsFromPatients(patients) {
   const total = patients.length;
@@ -95,7 +97,7 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error(err);
       if (err?.code === "ERR_NETWORK") {
-        setError("Backend is offline. Start FastAPI server on port 8000 and refresh.");
+        setError("Backend is unreachable. Check deployed API URL/CORS and refresh.");
       } else {
         setError("Could not load dashboard analytics right now.");
       }

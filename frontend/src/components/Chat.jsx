@@ -4,7 +4,9 @@ import { Mic, Send, HeartPulse, Sparkles, Stethoscope, BadgeAlert } from "lucide
 import MessageBubble from "./MessageBubble";
 import PatientCard from "./PatientCard";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "process.env.REACT_APP_API_URL";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "http://localhost:8000" : "");
 
 function generateSessionId() {
   if (window.crypto?.randomUUID) return window.crypto.randomUUID();
@@ -56,7 +58,7 @@ export default function Chat() {
       setIsTyping(false);
       const message =
         error?.code === "ERR_NETWORK"
-          ? "Backend is offline. Please start the API server on port 8000."
+          ? "Backend is unreachable. Check deployed API URL/CORS configuration."
           : "Sorry, I'm having trouble connecting. Please try again.";
       setMessages((prev) => [
         ...prev,

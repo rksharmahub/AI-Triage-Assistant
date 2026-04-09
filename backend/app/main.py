@@ -5,20 +5,33 @@ from app.agent import handle_chat
 from app.database import fetch_patients, check_supabase_health
 from app.gemini import check_gemini_health
 from datetime import datetime, timezone
+import os
+from dotenv import load_dotenv
 
 import uvicorn
+
+load_dotenv()
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=10000)
 
 app = FastAPI()
 
+configured_origins = [
+    origin.strip()
+    for origin in (os.getenv("FRONTEND_ORIGINS") or "").split(",")
+    if origin.strip()
+]
+default_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://ai-triage-assistant-red.vercel.app",
+]
+allow_origins = list(dict.fromkeys(default_origins + configured_origins))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
