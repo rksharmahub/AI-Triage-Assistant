@@ -81,6 +81,13 @@ Create `backend/.env`:
 GEMINI_API_KEY=your_gemini_api_key
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_key
+FRONTEND_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,https://ai-triage-assistant-red.vercel.app
+```
+
+Create `frontend/.env` for local development:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
 ## Local Setup
@@ -104,6 +111,23 @@ npm run dev
 ```
 
 Frontend runs on `http://127.0.0.1:5173` (or `http://localhost:5173`).
+
+## Deployment (Vercel + Render)
+
+### Frontend (Vercel)
+
+- Project root: `frontend`
+- Environment variable:
+  - `VITE_API_BASE_URL=https://ai-triage-assistant.onrender.com`
+- SPA routing:
+  - `frontend/vercel.json` rewrites all routes to `index.html` so `/admin` works on refresh/direct open.
+
+### Backend (Render)
+
+- Ensure backend environment includes:
+  - `FRONTEND_ORIGINS=https://ai-triage-assistant-red.vercel.app`
+- Confirm API health:
+  - `https://ai-triage-assistant.onrender.com/health`
 
 ## Data Contract
 
@@ -137,6 +161,7 @@ This is why you may still see severity/explanation even when Gemini quota is exh
 
 - Chat says `trouble connecting`:
 - Verify backend is running on `127.0.0.1:8000`
+- In production, verify `VITE_API_BASE_URL` is set in Vercel.
 
 - Dashboard analytics fails:
 - Open `GET /health` and check `supabase` and `gemini` status
@@ -150,5 +175,6 @@ This is why you may still see severity/explanation even when Gemini quota is exh
 - CORS is enabled for:
 - `http://localhost:5173`
 - `http://127.0.0.1:5173`
+- `https://ai-triage-assistant-red.vercel.app`
 
 - Python 3.9 works but is legacy; upgrading Python is recommended for long-term compatibility.
