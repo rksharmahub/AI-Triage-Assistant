@@ -6,6 +6,11 @@ from app.database import fetch_patients, check_supabase_health
 from app.gemini import check_gemini_health
 from datetime import datetime, timezone
 
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=10000)
+
 app = FastAPI()
 
 app.add_middleware(
