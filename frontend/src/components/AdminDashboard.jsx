@@ -31,7 +31,7 @@ ChartJS.register(
   Legend
 );
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "process.env.REACT_APP_API_URL";
 
 function buildAnalyticsFromPatients(patients) {
   const total = patients.length;

@@ -4,7 +4,7 @@ import { Mic, Send, HeartPulse, Sparkles, Stethoscope, BadgeAlert } from "lucide
 import MessageBubble from "./MessageBubble";
 import PatientCard from "./PatientCard";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "process.env.REACT_APP_API_URL";
 
 function generateSessionId() {
   if (window.crypto?.randomUUID) return window.crypto.randomUUID();
