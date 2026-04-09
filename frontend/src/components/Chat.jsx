@@ -27,6 +27,17 @@ export default function Chat() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+    if (!API_BASE_URL) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "API URL is not configured. Set VITE_API_BASE_URL in frontend deployment settings.",
+          role: "assistant",
+          time: new Date()
+        }
+      ]);
+      return;
+    }
 
     const userMessage = {
       text: input,

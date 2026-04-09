@@ -82,6 +82,12 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchAll = async () => {
+    if (!API_BASE_URL) {
+      setLoading(false);
+      setError("API URL is not configured. Set VITE_API_BASE_URL in frontend deployment settings.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -114,6 +120,12 @@ export default function AdminDashboard() {
   };
 
   const fetchHealth = async () => {
+    if (!API_BASE_URL) {
+      setHealth(null);
+      setHealthError("Health check unavailable (VITE_API_BASE_URL not configured).");
+      return;
+    }
+
     setHealthError("");
     try {
       const res = await axios.get(`${API_BASE_URL}/health`);
